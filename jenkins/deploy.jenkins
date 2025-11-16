@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/lhalf/it.git'
+            }
+        }
+
+        stage('export') {
+            steps {
+                sh './dev/run_in_pod.sh just export'
+            }
+        }
+    }
+}
