@@ -14,3 +14,7 @@ config/name="it"
 run/main_scene="uid://cy7mxkpy6mdxe"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Debug="*res://dev/Debug.tscn"
