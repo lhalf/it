@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://c55f034nn3qqo"]
+
+[ext_resource type="Script" uid="uid://doh043licj0hv" path="res://dev/debug.gd" id="1_m0fbi"]
+
+[node name="Debug" type="Node"]
+process_mode = 3
+script = ExtResource("1_m0fbi")
+
+[node name="Logs" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
