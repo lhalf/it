@@ -13,6 +13,7 @@ podman build --quiet --file dev/Dockerfile --format=docker --tag ${container} . 
 podman run \
     -it \
     --replace \
+    --security-opt unmask=/proc \
     --name ${container} \
     -v "$(pwd):$(pwd):Z" \
     ${container} \
