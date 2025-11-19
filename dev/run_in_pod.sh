@@ -11,6 +11,7 @@ echo "building pod..."
 podman build --file dev/Dockerfile --format=docker --tag ${container} . > /dev/null
 
 podman run \
+    --network=host \
     -it \
     --replace \
     --name ${container} \
