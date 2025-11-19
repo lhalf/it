@@ -17,6 +17,7 @@ func _create_server() -> void:
 	multiplayer.multiplayer_peer = peer
 	Debug.log("server created")
 	get_tree().paused = false
+	%MapManager.change_map.call_deferred(load("res://src/map/1/map.tscn"))
 
 func _join_server() -> void:
 	var address: String = "localhost" if  "--localhost" in OS.get_cmdline_args() else ADDRESS;
