@@ -17,6 +17,7 @@ func _create_server() -> void:
 	multiplayer.multiplayer_peer = peer
 	Debug.log("server created")
 	get_tree().paused = false
+	%PlayerManager.setup()
 	%MapManager.change_map.call_deferred(load("res://src/map/1/map.tscn"))
 
 func _join_server() -> void:
@@ -32,4 +33,6 @@ func _join_server() -> void:
 
 func _on_disconnect() -> void:
 	Debug.log("left server")
-	get_tree().change_scene_to_file("res://main.tscn")
+	multiplayer.multiplayer_peer.close()
+	multiplayer.multiplayer_peer = null
+	get_tree().change_scene_to_file.call_deferred("res://src/main.tscn")

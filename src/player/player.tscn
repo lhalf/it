@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dm4bqkqvfal3i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qnmj6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4anbu"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qnmj6"]
+properties/0/path = NodePath(".:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_qnmj6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_4anbu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.98624235, 0.16530581, 0, -0.16530581, 0.98624235, 0, 1.4192082, 2.0143392)
+
+[node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qnmj6")
