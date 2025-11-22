@@ -1,0 +1,11 @@
+extends MultiplayerSynchronizer
+
+@export var direction := Vector2.ZERO
+@export var space_pressed := false
+
+func _ready() -> void:
+	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
+
+func _process(_delta: float) -> void:
+	direction = Input.get_vector("left", "right", "forward", "backward")
+	space_pressed = Input.is_action_pressed("jump")

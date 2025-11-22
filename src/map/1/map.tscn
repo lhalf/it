@@ -19,3 +19,7 @@ shape = SubResource("WorldBoundaryShape3D_kwva4")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 mesh = SubResource("QuadMesh_vfn15")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5324775, 0.8464442, 0, -0.8464442, 0.5324775, 0, 0, 0)
+shadow_enabled = true

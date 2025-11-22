@@ -3,7 +3,10 @@ class_name MapManager extends Node
 @onready var current_map: Node = %CurrentMap
 
 func change_map(map: PackedScene) -> void:
-	for child in current_map.get_children():
-		remove_child(child)
-		child.queue_free()
+	remove_map()
 	current_map.add_child(map.instantiate())
+
+func remove_map() -> void:
+	for map: Node3D in current_map.get_children():
+		current_map.remove_child(map)
+		map.queue_free()

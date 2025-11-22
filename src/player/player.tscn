@@ -1,15 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://dm4bqkqvfal3i"]
+[gd_scene load_steps=10 format=3 uid="uid://dm4bqkqvfal3i"]
+
+[ext_resource type="Script" uid="uid://stho28wi4nul" path="res://src/player/input_synchronizer.gd" id="1_4anbu"]
+[ext_resource type="Script" uid="uid://cvyn03bjqliky" path="res://src/player/player.gd" id="1_rxibo"]
+[ext_resource type="Script" uid="uid://ksua0jn3vbdk" path="res://src/player/movement.gd" id="3_mf2ua"]
+[ext_resource type="Script" uid="uid://dqcy42x753ajy" path="res://src/player/movement_values.gd" id="4_244u8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qnmj6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4anbu"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qnmj6"]
-properties/0/path = NodePath(".:rotation")
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4anbu"]
+properties/0/path = NodePath("InputSynchronizer:direction")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+properties/1/path = NodePath("InputSynchronizer:space_pressed")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="Resource" id="Resource_5f2sf"]
+script = ExtResource("4_244u8")
+max_speed = 10
+acceleration = 2
+friction = 5
+sensitivity = 0.5
+upper_clamp_angle_degrees = 70
+lower_clamp_angle_degrees = 15
+metadata/_custom_type_script = "uid://dqcy42x753ajy"
 
 [node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_rxibo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -20,7 +44,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_4anbu")
 
 [node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.98624235, 0.16530581, 0, -0.16530581, 0.98624235, 0, 1.4192082, 2.0143392)
 
-[node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="PositionSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qnmj6")
+
+[node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_4anbu")
+script = ExtResource("1_4anbu")
+
+[node name="Movement" type="Node" parent="." node_paths=PackedStringArray("player")]
+unique_name_in_owner = true
+script = ExtResource("3_mf2ua")
+player = NodePath("..")
+movement_values = SubResource("Resource_5f2sf")

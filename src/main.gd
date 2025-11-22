@@ -35,4 +35,5 @@ func _on_disconnect() -> void:
 	Debug.log("left server")
 	multiplayer.multiplayer_peer.close()
 	multiplayer.multiplayer_peer = null
-	get_tree().change_scene_to_file.call_deferred("res://src/main.tscn")
+	%PlayerManager.remove_all_players()
+	%MapManager.remove_map()
