@@ -2,7 +2,7 @@ extends Node
 
 @onready var input_synchronizer: MultiplayerSynchronizer = %InputSynchronizer
 @onready var head: Node3D = %Head
-@onready var hand: Node3D = %Hand
+@onready var hand: Node3D = %HandRight
 
 @export var player: Player
 @export var movement_values: MovementValues
