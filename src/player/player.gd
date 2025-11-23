@@ -16,4 +16,4 @@ func _ready() -> void:
 	camera_3d.current = is_client
 	movement.set_process_input(is_client)
 	input_synchronizer.set_process_input(is_client)
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
