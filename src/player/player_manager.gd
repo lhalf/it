@@ -12,6 +12,8 @@ func setup() -> void:
 func add_player(id: int) -> void:
 	var player: CharacterBody3D = player_scene.instantiate()
 	player.name = str(id)
+	player.position.x = randi_range(-5, 5)
+	player.position.z = randi_range(-5, 5)
 	players.add_child(player, true)
 
 func remove_player(id: int) -> void:

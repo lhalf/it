@@ -1,6 +1,7 @@
 extends Node
 
 @onready var input_synchronizer: MultiplayerSynchronizer = %InputSynchronizer
+@onready var head: Node3D = %Head
 
 @export var player: Player
 @export var movement_values: MovementValues
@@ -34,3 +35,11 @@ func _physics_process(delta: float) -> void:
 			player.velocity.z = lerp(player.velocity.z, 0.0, movement_values.air_resistance * delta)
 	
 	player.move_and_slide()
+
+# client tells everyone else this information
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		player.rotation_degrees.y -= (event.relative.x * movement_values.sensitivity)
+		head.rotation_degrees.x = clamp(head.rotation_degrees.x + -event.relative.y * movement_values.sensitivity,
+		 -movement_values.upper_clamp_angle_degrees,
+		 movement_values.lower_clamp_angle_degrees)
