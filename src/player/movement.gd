@@ -1,13 +1,22 @@
-extends Node
+class_name Movement extends Node
 
 @onready var input_synchronizer: MultiplayerSynchronizer = %InputSynchronizer
 @onready var head: Node3D = %Head
 @onready var hand: Node3D = %HandRight
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 
 @export var player: Player
 @export var movement_values: MovementValues
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+@rpc("any_peer", "call_local", "reliable")
+func apply_impulse(impulse: Vector3) -> void:
+	player.velocity += impulse
+
+@rpc("any_peer", "call_remote", "reliable")
+func jump() -> void:
+	animation_player.play("jump")
 
 func _ready() -> void:
 	player.motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
@@ -15,6 +24,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# jumping
 	if player.is_on_floor() and input_synchronizer.space_pressed:
+		jump.rpc()
 		player.velocity.y += movement_values.jump_velocity
 	
 	# falling

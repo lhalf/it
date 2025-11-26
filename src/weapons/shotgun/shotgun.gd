@@ -3,6 +3,8 @@ class_name Shotgun extends Node3D
 @onready var animations: AnimationPlayer = %AnimationPlayer
 @onready var shoot_sound: AudioStreamPlayer3D = %ShootSound
 
+@export var power: int = 50
+
 # currently only for animations etc
 @rpc("any_peer", "call_local", "reliable")
 func shoot_left() -> void:
