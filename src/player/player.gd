@@ -18,4 +18,3 @@ func _ready() -> void:
 	movement.set_process_input(is_client)
 	input_synchronizer.set_process_input(is_client)
 	ui.visible = is_client
-	# Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

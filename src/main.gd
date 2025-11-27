@@ -8,6 +8,8 @@ var peer := ENetMultiplayerPeer.new()
 func _ready() -> void:
 	get_tree().paused = true
 	if "--server" in OS.get_cmdline_args():
+		# TODO: remove
+		get_tree().root.mode = Window.MODE_MINIMIZED
 		_create_server()
 	else:
 		_join_server()
@@ -18,7 +20,7 @@ func _create_server() -> void:
 	Debug.log("server created")
 	get_tree().paused = false
 	%PlayerManager.setup()
-	%MapManager.change_map.call_deferred(load("res://src/map/1/map.tscn"))
+	%MapManager.change_map.call_deferred(load("res://src/map/forest/map.tscn"))
 
 func _join_server() -> void:
 	var address: String = "localhost" if  "--localhost" in OS.get_cmdline_args() else ADDRESS;
