@@ -7,18 +7,26 @@ const shell_scene = preload("res://src/weapons/shotgun/shell.tscn")
 @onready var shell_spawn: Node3D = %ShellSpawn
 
 @export var power: int = 35
+@export var reloading: bool = false
+
+enum Barrel { LEFT, RIGHT }
+
+var current_barrel: Barrel = Barrel.LEFT
 
 # currently only for animations etc
 @rpc("any_peer", "call_local", "reliable")
-func shoot_left() -> void:
-	shoot_sound.play()
-	animations.play("shoot_left")
-	release_shell()
+func shoot() -> void:
+	if current_barrel == Barrel.LEFT:
+		fire("shoot_left")
+		current_barrel = Barrel.RIGHT
+	elif current_barrel == Barrel.RIGHT:
+		fire("shoot_right")
+		reloading = true
+		%ReloadTimer.start()
 
-@rpc("any_peer", "call_local", "reliable")
-func shoot_right() -> void:
+func fire(animation_name: String) -> void:
 	shoot_sound.play()
-	animations.play("shoot_right")
+	animations.play(animation_name)
 	release_shell()
 
 func release_shell() -> void:
@@ -27,3 +35,7 @@ func release_shell() -> void:
 	shell.linear_velocity = Vector3(0,6,0)
 	shell.angular_velocity = Vector3(0,0,10)
 	add_child(shell)
+
+func reload() -> void:
+	reloading = false
+	current_barrel = Barrel.LEFT

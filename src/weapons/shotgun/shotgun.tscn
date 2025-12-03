@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://c1fwlctc61psg"]
+[gd_scene load_steps=33 format=4 uid="uid://c1fwlctc61psg"]
 
 [ext_resource type="Script" uid="uid://dfbr60py6gqvo" path="res://src/weapons/shotgun/shotgun.gd" id="1_em1x2"]
 [ext_resource type="Texture2D" uid="uid://picritedrtem" path="res://src/weapons/shotgun/assets/muzzle_flash.png" id="1_jlkur"]
@@ -477,7 +477,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [50.0, 0.0]
+"values": [10.0, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_ba8fe"]
@@ -565,12 +565,40 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [50.0, 0.0]
+"values": [10.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_1h18n"]
+resource_name = "reload"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.1098899, 1.5707964, -1.5707964), Vector3(-2.401573, 1.5707964, -1.5707964), Vector3(-3.5447638, 1.5707964, -1.5707964), Vector3(-6.46819, 1.5707964, -1.5707964), Vector3(-7.410668, 1.5707964, -1.5707964), Vector3(-8.396779, 1.5707964, -1.5707964), Vector3(-7.8731804, 1.5707964, -1.5707964)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.5151627, 0.64595723, 0), Vector3(1.125, 1.341, 0), Vector3(1.0220212, 1.4205903, 0), Vector3(1.0220212, 1.085085, 0), Vector3(1.0220212, 0.24696994, 0), Vector3(-0.003, 0.027, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ba8fe"]
 _data = {
 &"RESET": SubResource("Animation_em1x2"),
+&"reload": SubResource("Animation_1h18n"),
 &"shoot_left": SubResource("Animation_jlkur"),
 &"shoot_right": SubResource("Animation_ba8fe")
 }
@@ -599,7 +627,7 @@ material = SubResource("StandardMaterial3D_ktpp6")
 script = ExtResource("1_em1x2")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(40, 0, 0, 0, -1.7484556e-06, 40, 0, -40, -1.7484556e-06, 0, 0, 0)
+transform = Transform3D(40, 0, 0, 0, -1.748455e-06, 40, 0, -39.99999, -1.7484556e-06, 0, 0, 0)
 mesh = SubResource("ArrayMesh_6ysec")
 
 [node name="Outline" type="MeshInstance3D" parent="Mesh"]
@@ -619,7 +647,7 @@ visible = false
 mesh = SubResource("QuadMesh_ktpp6")
 
 [node name="HandRight" type="Node3D" parent="Mesh"]
-transform = Transform3D(-0.000375, 0, -3.278354e-11, -3.278354e-11, -1.6391772e-11, 0.000375, -1.4330141e-18, 0.000375, 1.6391772e-11, 0.0028912704, -0.0006868563, -0.003059867)
+transform = Transform3D(-0.00037368468, -3.137922e-05, -1.3716283e-12, 2.1684043e-19, -1.6391768e-11, 0.0003749996, -3.137922e-05, 0.00037368468, 1.6334266e-11, 0.0025309764, -0.0006868557, -0.0032916104)
 
 [node name="Mesh" type="MeshInstance3D" parent="Mesh/HandRight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.43, -26.275, 0)
@@ -659,3 +687,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43582252, 0.18745413, 0)
 [node name="ShootLight" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3960506, 0.15842757, 0)
 light_energy = 0.0
+
+[node name="ReloadTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.5
+one_shot = true
+
+[connection signal="timeout" from="ReloadTimer" to="." method="reload"]

@@ -13,7 +13,5 @@ func _process(_delta: float) -> void:
 	space_pressed = Input.is_action_pressed("jump")
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shoot_left"):
-		weapon.shoot_left()
-	if event.is_action_pressed("shoot_right"):
-		weapon.shoot_right()
+	if event.is_action_pressed("shoot"):
+		weapon.shoot()

@@ -4,13 +4,10 @@ class_name Weapon extends Node3D
 @onready var shotgun: Shotgun = %Shotgun
 @onready var shoot_ray: RayCast3D = %ShootRay
 
-func shoot_left() -> void:
-	shotgun.shoot_left.rpc()
-	check_hit()
-	movement.apply_impulse.rpc_id(1, -(global_transform.basis * shoot_ray.target_position).normalized() * shotgun.power)
-
-func shoot_right() -> void:
-	shotgun.shoot_right.rpc()
+func shoot() -> void:
+	if shotgun.reloading:
+		return
+	shotgun.shoot.rpc()
 	check_hit()
 	movement.apply_impulse.rpc_id(1, -(global_transform.basis * shoot_ray.target_position).normalized() * shotgun.power)
 
