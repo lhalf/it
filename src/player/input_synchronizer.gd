@@ -6,7 +6,9 @@ extends MultiplayerSynchronizer
 @export var space_pressed := false
 
 func _ready() -> void:
-	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
+	var is_authority = get_multiplayer_authority() == multiplayer.get_unique_id()
+	set_process(is_authority)
+	set_process_input(is_authority)
 
 func _process(_delta: float) -> void:
 	direction = Input.get_vector("left", "right", "forward", "backward")

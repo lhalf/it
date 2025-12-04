@@ -51,8 +51,6 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		player.rotation_degrees.y -= (event.relative.x * movement_values.sensitivity)
-		var vertical_rotation_x: int = clamp(head.rotation_degrees.x + -event.relative.y * movement_values.sensitivity,
+		head.rotation_degrees.x = clamp(head.rotation_degrees.x + -event.relative.y * movement_values.sensitivity,
 		 -movement_values.upper_clamp_angle_degrees,
 		 movement_values.lower_clamp_angle_degrees)
-		head.rotation_degrees.x = vertical_rotation_x
-		hand.rotation_degrees.x = vertical_rotation_x

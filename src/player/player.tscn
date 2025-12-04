@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://dm4bqkqvfal3i"]
+[gd_scene load_steps=32 format=4 uid="uid://dm4bqkqvfal3i"]
 
 [ext_resource type="Script" uid="uid://stho28wi4nul" path="res://src/player/input_synchronizer.gd" id="1_4anbu"]
 [ext_resource type="Script" uid="uid://cvyn03bjqliky" path="res://src/player/player.gd" id="1_rxibo"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c7e3gxvw3ayfn" path="res://src/player/assets/glasses.glb" id="5_5f2sf"]
 [ext_resource type="PackedScene" uid="uid://c1fwlctc61psg" path="res://src/weapons/shotgun/shotgun.tscn" id="5_jiejy"]
 [ext_resource type="Script" uid="uid://dnpkk3ay6245" path="res://src/player/weapon.gd" id="5_o822w"]
+[ext_resource type="Script" uid="uid://dj8ehw81w53pq" path="res://src/player/hand_right.gd" id="6_x42xx"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4anbu"]
 properties/0/path = NodePath("InputSynchronizer:direction")
@@ -20,9 +21,12 @@ properties/1/replication_mode = 1
 properties/0/path = NodePath(".:rotation")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("HandRight:rotation")
+properties/1/path = NodePath("Head:position")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("Head/HandRight:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qnmj6"]
 properties/0/path = NodePath(".:position")
@@ -314,11 +318,20 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -100)
 
-[node name="HandRight" type="Node3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.215, -0.712)
+[node name="HandLocation" type="Marker3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.8272735, -0.015394986)
 
-[node name="Shotgun" parent="HandRight" instance=ExtResource("5_jiejy")]
+[node name="HandRight" type="Node3D" parent="Head" node_paths=PackedStringArray("player", "head", "hand", "hand_location")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.21499997, -0.7120001)
+top_level = true
+script = ExtResource("6_x42xx")
+player = NodePath("../..")
+head = NodePath("..")
+hand = NodePath(".")
+hand_location = NodePath("../HandLocation")
+
+[node name="Shotgun" parent="Head/HandRight" instance=ExtResource("5_jiejy")]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 power = null
