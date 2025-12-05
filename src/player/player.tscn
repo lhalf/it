@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://dm4bqkqvfal3i"]
+[gd_scene load_steps=37 format=4 uid="uid://dm4bqkqvfal3i"]
 
 [ext_resource type="Script" uid="uid://stho28wi4nul" path="res://src/player/input_synchronizer.gd" id="1_4anbu"]
 [ext_resource type="Script" uid="uid://cvyn03bjqliky" path="res://src/player/player.gd" id="1_rxibo"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c1fwlctc61psg" path="res://src/weapons/shotgun/shotgun.tscn" id="5_jiejy"]
 [ext_resource type="Script" uid="uid://dnpkk3ay6245" path="res://src/player/weapon.gd" id="5_o822w"]
 [ext_resource type="Script" uid="uid://dj8ehw81w53pq" path="res://src/player/hand_right.gd" id="6_x42xx"]
+[ext_resource type="Script" uid="uid://bmivl8q4x2y5n" path="res://src/player/hand_left.gd" id="8_l271a"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4anbu"]
 properties/0/path = NodePath("InputSynchronizer:direction")
@@ -43,10 +44,12 @@ acceleration = 2
 friction = 5
 sensitivity = 0.3
 upper_clamp_angle_degrees = 60
-lower_clamp_angle_degrees = 30
+lower_clamp_angle_degrees = 90
 metadata/_custom_type_script = "uid://dqcy42x753ajy"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qnmj6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ydov"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o822w"]
 
@@ -250,6 +253,67 @@ _data = {
 &"jump": SubResource("Animation_o822w")
 }
 
+[sub_resource type="Animation" id="Animation_8ydov"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%HandLeft:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.4990808, 0.13108297, -0.5823355)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%HandLeft:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.3093247, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l271a"]
+resource_name = "tag"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%HandLeft:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.4990808, 0.13108297, -0.5823355), Vector3(-0.499, 0.34, -2.553), Vector3(-0.4990808, 0.13108297, -0.5823355)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%HandLeft:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.3093247, 0, 0), Vector3(-1.1375532, 0, 0), Vector3(-0.3093247, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ydov"]
+_data = {
+&"RESET": SubResource("Animation_8ydov"),
+&"tag": SubResource("Animation_l271a")
+}
+
 [sub_resource type="Curve" id="Curve_o822w"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.1690141), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -301,6 +365,7 @@ shape = SubResource("BoxShape3D_qnmj6")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_overlay = SubResource("StandardMaterial3D_8ydov")
 mesh = SubResource("BoxMesh_4anbu")
 
 [node name="Outline" type="MeshInstance3D" parent="Body"]
@@ -338,7 +403,9 @@ power = null
 reloading = null
 
 [node name="HandLeft" type="Node3D" parent="."]
-transform = Transform3D(0.015, 0, 0, 0, 0.01428809, 0.0045662317, 0, -0.0045662317, 0.01428809, -0.4990808, 0.13108297, -0.5823355)
+unique_name_in_owner = true
+transform = Transform3D(0.015, 0, 0, 0, 0.014288089, 0.0045662317, 0, -0.0045662317, 0.014288089, -0.4990808, 0.13108297, -0.5823355)
+script = ExtResource("8_l271a")
 
 [node name="Mesh" type="MeshInstance3D" parent="HandLeft"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -8.66, -21.92, -5.22)
@@ -347,7 +414,7 @@ mesh = SubResource("ArrayMesh_jiejy")
 skeleton = NodePath("")
 
 [node name="Mesh2" type="MeshInstance3D" parent="HandLeft"]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -8.66, -21.92, -5.22)
+transform = Transform3D(-1, 0, -8.742278e-08, 1.7763568e-15, 1, 0, 8.742277e-08, 0, -1, -8.66, -21.92, -5.2199974)
 mesh = SubResource("ArrayMesh_o822w")
 skeleton = NodePath("")
 
@@ -356,7 +423,6 @@ transform = Transform3D(0.64, 0, 0, 0, 0.64, 0, 0, 0, 0.64, 0.05, 0.56, -0.456)
 
 [node name="UI" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -381,10 +447,17 @@ grow_vertical = 2
 rotation = 0.7853982
 pivot_offset = Vector2(2.5, 2.5)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="PlayerAnimations" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_x42xx")
+}
+
+[node name="HandAnimations" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("../PlayerAnimations")
+libraries = {
+&"": SubResource("AnimationLibrary_8ydov")
 }
 
 [node name="JumpParticles" type="GPUParticles3D" parent="."]

@@ -13,7 +13,7 @@ unique_name_in_owner = true
 script = ExtResource("2_gh0ne")
 
 [node name="MapSpawner" type="MultiplayerSpawner" parent="MapManager"]
-_spawnable_scenes = PackedStringArray("uid://dw6xh7ugj4gi8")
+_spawnable_scenes = PackedStringArray("uid://dw6xh7ugj4gi8", "uid://ck520dekwe0ek")
 spawn_path = NodePath("../CurrentMap")
 spawn_limit = 1
 

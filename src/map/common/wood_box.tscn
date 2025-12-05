@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2yph4hmexiur"]
+
+[ext_resource type="Texture2D" uid="uid://bucn45wivoc2g" path="res://src/map/assets/wood.png" id="1_csj2u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dc55v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wr18a"]
+albedo_texture = ExtResource("1_csj2u")
+uv1_scale = Vector3(3, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yirlq"]
+material = SubResource("StandardMaterial3D_wr18a")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_csj2u"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dc55v"]
+material = SubResource("StandardMaterial3D_csj2u")
+flip_faces = true
+
+[node name="WoodBox" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_dc55v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_yirlq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_dc55v")

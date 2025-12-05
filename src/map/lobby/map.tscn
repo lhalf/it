@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://dw6xh7ugj4gi8"]
+
+[ext_resource type="Script" uid="uid://s3ytu0hcj46w" path="res://src/map/lobby/map.gd" id="1_imt6u"]
+[ext_resource type="Script" uid="uid://dmyj0qeo5s415" path="res://src/map/lobby/ready_ball.gd" id="2_ginc2"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_imt6u"]
+data = PackedVector3Array(-10, -2.5, 10, -10, 2.5, -10, -10, -2.5, -10, 10, -2.5, -10, -10, -2.5, 10, -10, -2.5, -10, -10, 2.5, -10, 10, -2.5, -10, -10, -2.5, -10, -10, 2.5, -10, -10, -2.5, 10, -10, 2.5, 10, -10, -2.5, 10, 10, 2.5, 10, -10, 2.5, 10, 10, 2.5, 10, -10, 2.5, -10, -10, 2.5, 10, -10, -2.5, 10, 10, -2.5, -10, 10, -2.5, 10, 10, 2.5, 10, -10, -2.5, 10, 10, -2.5, 10, 10, -2.5, -10, 10, 2.5, 10, 10, -2.5, 10, 10, -2.5, -10, -10, 2.5, -10, 10, 2.5, -10, -10, 2.5, -10, 10, 2.5, 10, 10, 2.5, -10, 10, 2.5, 10, 10, -2.5, -10, 10, 2.5, -10)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_imt6u"]
+properties/0/path = NodePath(".:linear_velocity")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ginc2"]
+bounce = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ginc2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ginc2"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ginc2"]
+material = SubResource("StandardMaterial3D_ginc2")
+
+[node name="Map" type="Node3D"]
+script = ExtResource("1_imt6u")
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+flip_faces = true
+size = Vector3(20, 5, 20)
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("ConcavePolygonShape3D_imt6u")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22.20497, 0)
+light_energy = 20.0
+omni_range = 50.0
+
+[node name="LobbyLabel" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8492785, 0)
+text = "Lobby"
+font_size = 500
+
+[node name="CubeSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../ReadyBall")
+replication_config = SubResource("SceneReplicationConfig_imt6u")
+
+[node name="ReadyBall" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.88903964, 6)
+physics_material_override = SubResource("PhysicsMaterial_ginc2")
+gravity_scale = -1.0
+script = ExtResource("2_ginc2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ReadyBall"]
+shape = SubResource("SphereShape3D_ginc2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ReadyBall"]
+unique_name_in_owner = true
+mesh = SubResource("SphereMesh_ginc2")

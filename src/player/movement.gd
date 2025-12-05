@@ -3,7 +3,7 @@ class_name Movement extends Node
 @onready var input_synchronizer: MultiplayerSynchronizer = %InputSynchronizer
 @onready var head: Node3D = %Head
 @onready var hand: Node3D = %HandRight
-@onready var animation_player: AnimationPlayer = %AnimationPlayer
+@onready var player_animations: AnimationPlayer = %PlayerAnimations
 
 @export var player: Player
 @export var movement_values: MovementValues
@@ -16,7 +16,7 @@ func apply_impulse(impulse: Vector3) -> void:
 
 @rpc("any_peer", "call_remote", "reliable")
 func jump() -> void:
-	animation_player.play("jump")
+	player_animations.play("jump")
 
 func _ready() -> void:
 	player.motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED

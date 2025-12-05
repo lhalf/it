@@ -16,3 +16,6 @@ func check_hit() -> void:
 		var collider = shoot_ray.get_collider()
 		if collider is Player:
 			collider.movement.apply_impulse.rpc_id(1, global_position.direction_to(collider.global_position) * shotgun.power)
+		if collider is ReadyBall:
+			collider.on_hit.rpc_id(1, global_position.direction_to(collider.global_position) * shotgun.power)
+			collider.on_hit_local()
