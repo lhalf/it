@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://ck520dekwe0ek"]
+[gd_scene load_steps=10 format=3 uid="uid://ck520dekwe0ek"]
 
 [ext_resource type="Texture2D" uid="uid://c7c1blrp1nki1" path="res://src/map/assets/texture_floor.png" id="1_2slsx"]
+[ext_resource type="Script" uid="uid://pwmh3f73sq5m" path="res://src/map/docks/map.gd" id="1_ofv2w"]
 [ext_resource type="PackedScene" uid="uid://d2yph4hmexiur" path="res://src/map/common/wood_box.tscn" id="2_wt6h8"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_0opkc"]
@@ -27,8 +28,11 @@ background_mode = 2
 sky = SubResource("Sky_wt6h8")
 
 [node name="Map" type="Node3D"]
+script = ExtResource("1_ofv2w")
 
 [node name="Floor" type="StaticBody3D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("WorldBoundaryShape3D_0opkc")

@@ -1,5 +1,6 @@
 class_name PlayerManager extends Node
 
+@onready var map_manager: MapManager = %MapManager
 @onready var player_scene: PackedScene = preload("res://src/player/player.tscn")
 @onready var players: Node = %Players
 
@@ -17,10 +18,13 @@ func add_player(id: int) -> void:
 	players.add_child(player, true)
 
 func remove_player(id: int) -> void:
-	if players.has_node(str(id)):
-		var player: CharacterBody3D = players.get_node(str(id))
+	var player = players.get_node(str(id))
+	if player:
 		players.remove_child(player)
 		player.queue_free()
+	if players.get_children().is_empty():
+		Debug.log("everyone left")
+		map_manager.change_map(load("res://src/map/lobby/map.tscn"))
 
 func spawn_connected_players() -> void:
 	for id: int in multiplayer.get_peers():

@@ -10,7 +10,7 @@ func _ready() -> void:
 	var is_authority = get_multiplayer_authority() == multiplayer.get_unique_id()
 	set_process(is_authority)
 	set_process_input(is_authority)
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _process(_delta: float) -> void:
 	direction = Input.get_vector("left", "right", "forward", "backward")

@@ -4,6 +4,10 @@ class_name ReadyBall extends RigidBody3D
 
 var is_ready: bool = false
 
+func _ready() -> void:
+	if Debug.debug_mode:
+		on_hit.rpc_id(1, Vector3.ZERO)
+
 @rpc("any_peer", "call_remote", "reliable")
 func on_hit(impulse: Vector3) -> void:
 	apply_impulse(impulse)

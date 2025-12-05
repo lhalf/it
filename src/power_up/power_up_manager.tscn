@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj7xfpnxx5q15"]
+
+[ext_resource type="Script" uid="uid://hovly4golyfs" path="res://src/power_up/power_up_manager.gd" id="1_qgg4c"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nc7hu"]
+size = Vector3(50, 1, 50)
+
+[node name="PowerUpManager" type="Node3D"]
+script = ExtResource("1_qgg4c")
+
+[node name="PowerUpSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://cikfqp778d5fc")
+spawn_path = NodePath("../PowerUps")
+spawn_limit = 32
+
+[node name="PowerUpArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PowerUpArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+shape = SubResource("BoxShape3D_nc7hu")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="PowerUps" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

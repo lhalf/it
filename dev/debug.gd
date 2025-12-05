@@ -1,6 +1,12 @@
 extends Node
 
+@export var debug_mode := false
+
 @onready var logs: RichTextLabel = %Logs
+
+func _ready() -> void:
+	if "--dbg" in OS.get_cmdline_args():
+		debug_mode = true
 
 func log(message: String) -> void:
 	print(message)

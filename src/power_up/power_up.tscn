@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://cikfqp778d5fc"]
+
+[ext_resource type="Script" uid="uid://ch7dksb3c1v7b" path="res://src/power_up/power_up.gd" id="1_2tof0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2tof0"]
+bounce = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sewk8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2tof0"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_sewk8"]
+material = SubResource("StandardMaterial3D_2tof0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d4eyp"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_0csno"]
+material = SubResource("StandardMaterial3D_d4eyp")
+flip_faces = true
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2tof0"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:linear_velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:type")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2tof0"]
+radius = 1.0
+
+[node name="PowerUp" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_2tof0")
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("1_2tof0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_sewk8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("SphereMesh_sewk8")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+mesh = SubResource("SphereMesh_0csno")
+skeleton = NodePath("../PowerUpSynchronizer")
+
+[node name="PowerUpSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2tof0")
+
+[node name="PickUpArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
+shape = SubResource("SphereShape3D_2tof0")
+
+[connection signal="body_entered" from="PickUpArea" to="." method="_on_pick_up_area_body_entered"]

@@ -27,8 +27,9 @@ func _create_server() -> void:
 
 func _join_server() -> void:
 	Debug.log("joining server...")
-	var address: String = "localhost" if  "--localhost" in OS.get_cmdline_args() else ADDRESS;
+	var address: String = "ws://localhost:8443" if Debug.debug_mode else ADDRESS;
 	if peer.create_client(address) != OK:
+		Debug.log("failed to join server...")
 		return
 	multiplayer.multiplayer_peer = peer
 	if not multiplayer.server_disconnected.is_connected(_on_disconnect):
