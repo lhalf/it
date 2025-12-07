@@ -25,6 +25,11 @@ Debug="*res://dev/Debug.tscn"
 GameManager="*res://src/game/game_manager.tscn"
 Signals="*res://src/global/signals.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
+
 [editor]
 
 run/main_run_args="--verbose"

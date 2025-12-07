@@ -24,6 +24,7 @@ func _ready() -> void:
 	movement.set_process_input(is_client)
 	input_synchronizer.set_process_input(is_client)
 	pick_up_area.monitorable = is_client
+	ui.set_process_input(is_client)
 	ui.visible = is_client
 
 func _set_visible_to_client(is_client: bool) -> void:

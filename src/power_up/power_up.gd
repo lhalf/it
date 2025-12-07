@@ -1,4 +1,4 @@
-class_name PowerUp extends RigidBody3D
+class_name PowerUp extends ShootableBody
 
 @onready var mesh_instance_3d: MeshInstance3D = %MeshInstance3D
 

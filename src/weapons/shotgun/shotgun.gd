@@ -7,6 +7,7 @@ signal reloaded
 @onready var animations: AnimationPlayer = %AnimationPlayer
 @onready var shoot_sound: AudioStreamPlayer3D = %ShootSound
 @onready var shell_spawn: Node3D = %ShellSpawn
+@onready var reload_sound: AudioStreamPlayer3D = %ReloadSound
 
 @export var self_knockback: int = 15
 @export var enemy_knockback: int = 30
@@ -18,7 +19,6 @@ enum Barrel { LEFT, RIGHT }
 
 var current_barrel: Barrel = Barrel.LEFT
 
-# currently only for animations etc
 @rpc("any_peer", "call_local", "reliable")
 func shoot() -> void:
 	rounds -= 1
@@ -27,7 +27,8 @@ func shoot() -> void:
 		current_barrel = Barrel.RIGHT
 	elif current_barrel == Barrel.RIGHT:
 		fire("shoot_right")
-		%ReloadTimer.start()
+		if multiplayer.get_unique_id() == multiplayer.get_remote_sender_id():
+			%ReloadTimer.start()
 
 func fire(animation_name: String) -> void:
 	shoot_sound.play()
@@ -42,6 +43,8 @@ func release_shell() -> void:
 	add_child(shell)
 
 func reload() -> void:
+	print("reloading on " + str(multiplayer.get_unique_id()))
+	reload_sound.play()
 	current_barrel = Barrel.LEFT
 	rounds = max_rounds
 	reloaded.emit()
