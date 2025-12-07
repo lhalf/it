@@ -2,12 +2,15 @@ class_name Shotgun extends Node3D
 
 const shell_scene = preload("res://src/weapons/shotgun/shell.tscn")
 
+signal reloaded
+
 @onready var animations: AnimationPlayer = %AnimationPlayer
 @onready var shoot_sound: AudioStreamPlayer3D = %ShootSound
 @onready var shell_spawn: Node3D = %ShellSpawn
 
 @export var power: int = 35
-@export var reloading: bool = false
+@export var max_rounds: int = 2
+@export var rounds = max_rounds
 
 enum Barrel { LEFT, RIGHT }
 
@@ -16,12 +19,12 @@ var current_barrel: Barrel = Barrel.LEFT
 # currently only for animations etc
 @rpc("any_peer", "call_local", "reliable")
 func shoot() -> void:
+	rounds -= 1
 	if current_barrel == Barrel.LEFT:
 		fire("shoot_left")
 		current_barrel = Barrel.RIGHT
 	elif current_barrel == Barrel.RIGHT:
 		fire("shoot_right")
-		reloading = true
 		%ReloadTimer.start()
 
 func fire(animation_name: String) -> void:
@@ -37,5 +40,6 @@ func release_shell() -> void:
 	add_child(shell)
 
 func reload() -> void:
-	reloading = false
 	current_barrel = Barrel.LEFT
+	rounds = max_rounds
+	reloaded.emit()

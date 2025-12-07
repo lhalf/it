@@ -22,6 +22,10 @@ func _setup_random() -> void:
 func _set_color(color: Color) -> void:
 	mesh_instance_3d.mesh.material.albedo_color = color
 
-func _on_pick_up_area_body_entered(body: Node3D) -> void:
-	if body is Player and multiplayer.is_server():
-		queue_free()
+func _on_pick_up_area_area_entered(area: Area3D) -> void:
+	if area is PickUpArea:
+		_delete.rpc_id(1)
+
+@rpc("any_peer", "call_remote", "reliable")
+func _delete() -> void:
+	queue_free()

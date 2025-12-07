@@ -4,6 +4,7 @@ class_name Player extends CharacterBody3D
 @onready var input_synchronizer: MultiplayerSynchronizer = %InputSynchronizer
 @onready var movement: Node = %Movement
 @onready var ui: Control = %UI
+@onready var pick_up_area: PickUpArea = %PickUpArea
 
 func _enter_tree() -> void:
 	# client controls input & rotation
@@ -17,4 +18,5 @@ func _ready() -> void:
 	camera_3d.current = is_client
 	movement.set_process_input(is_client)
 	input_synchronizer.set_process_input(is_client)
+	pick_up_area.monitorable = is_client
 	ui.visible = is_client

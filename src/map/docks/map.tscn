@@ -8,7 +8,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wt6h8"]
 albedo_texture = ExtResource("1_2slsx")
-uv1_scale = Vector3(50, 50, 50)
+uv1_scale = Vector3(10, 10, 10)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_0opkc"]
 material = SubResource("StandardMaterial3D_wt6h8")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://dm4bqkqvfal3i"]
+[gd_scene load_steps=41 format=4 uid="uid://dm4bqkqvfal3i"]
 
 [ext_resource type="Script" uid="uid://stho28wi4nul" path="res://src/player/input_synchronizer.gd" id="1_4anbu"]
 [ext_resource type="Script" uid="uid://cvyn03bjqliky" path="res://src/player/player.gd" id="1_rxibo"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://dnpkk3ay6245" path="res://src/player/weapon.gd" id="5_o822w"]
 [ext_resource type="Script" uid="uid://dj8ehw81w53pq" path="res://src/player/hand_right.gd" id="6_x42xx"]
 [ext_resource type="Script" uid="uid://bmivl8q4x2y5n" path="res://src/player/hand_left.gd" id="8_l271a"]
+[ext_resource type="Script" uid="uid://b1ji23jhuanf8" path="res://src/player/pick_up_area.gd" id="10_8ydov"]
+[ext_resource type="Script" uid="uid://12nlig5137ra" path="res://src/player/ui.gd" id="10_ylhto"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4anbu"]
 properties/0/path = NodePath("InputSynchronizer:direction")
@@ -22,12 +24,12 @@ properties/1/replication_mode = 1
 properties/0/path = NodePath(".:rotation")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("Head:position")
+properties/1/path = NodePath("Head:rotation")
 properties/1/spawn = true
-properties/1/replication_mode = 1
+properties/1/replication_mode = 2
 properties/2/path = NodePath("Head/HandRight:rotation")
 properties/2/spawn = true
-properties/2/replication_mode = 1
+properties/2/replication_mode = 2
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qnmj6"]
 properties/0/path = NodePath(".:position")
@@ -143,6 +145,9 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_fi68i")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ylhto"]
+font_size = 50
 
 [sub_resource type="Animation" id="Animation_x42xx"]
 length = 0.001
@@ -334,6 +339,9 @@ albedo_color = Color(1, 1, 1, 0.050980393)
 [sub_resource type="SphereMesh" id="SphereMesh_o822w"]
 material = SubResource("StandardMaterial3D_l271a")
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_l271a"]
+radius = 1.0
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_rxibo")
 
@@ -384,11 +392,11 @@ unique_name_in_owner = true
 target_position = Vector3(0, 0, -100)
 
 [node name="HandLocation" type="Marker3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.8272735, -0.015394986)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55049694, -0.7042849, -0.22390217)
 
 [node name="HandRight" type="Node3D" parent="Head" node_paths=PackedStringArray("player", "head", "hand", "hand_location")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.21499997, -0.7120001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0.325, -0.924)
 top_level = true
 script = ExtResource("6_x42xx")
 player = NodePath("../..")
@@ -399,8 +407,6 @@ hand_location = NodePath("../HandLocation")
 [node name="Shotgun" parent="Head/HandRight" instance=ExtResource("5_jiejy")]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
-power = null
-reloading = null
 
 [node name="HandLeft" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -429,8 +435,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("10_ylhto")
 
-[node name="ColorRect" type="ColorRect" parent="UI"]
+[node name="Crosshair" type="ColorRect" parent="UI"]
 custom_minimum_size = Vector2(5, 5)
 layout_mode = 1
 anchors_preset = 8
@@ -446,6 +453,28 @@ grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.7853982
 pivot_offset = Vector2(2.5, 2.5)
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -69.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Ammo" type="Label" parent="UI/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "2"
+label_settings = SubResource("LabelSettings_ylhto")
 
 [node name="PlayerAnimations" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -467,3 +496,13 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_o822w")
 draw_pass_1 = SubResource("SphereMesh_o822w")
+
+[node name="PickUpArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+monitoring = false
+monitorable = false
+script = ExtResource("10_8ydov")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
+shape = SubResource("SphereShape3D_l271a")

@@ -62,4 +62,4 @@ replication_config = SubResource("SceneReplicationConfig_2tof0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
 shape = SubResource("SphereShape3D_2tof0")
 
-[connection signal="body_entered" from="PickUpArea" to="." method="_on_pick_up_area_body_entered"]
+[connection signal="area_entered" from="PickUpArea" to="." method="_on_pick_up_area_area_entered"]
