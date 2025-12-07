@@ -8,7 +8,9 @@ signal reloaded
 @onready var shoot_sound: AudioStreamPlayer3D = %ShootSound
 @onready var shell_spawn: Node3D = %ShellSpawn
 
-@export var power: int = 35
+@export var self_knockback: int = 15
+@export var enemy_knockback: int = 30
+
 @export var max_rounds: int = 2
 @export var rounds = max_rounds
 

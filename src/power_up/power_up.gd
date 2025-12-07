@@ -24,6 +24,7 @@ func _set_color(color: Color) -> void:
 
 func _on_pick_up_area_area_entered(area: Area3D) -> void:
 	if area is PickUpArea:
+		Signals.rpc_id(1, "alert_power_up", type)
 		_delete.rpc_id(1)
 
 @rpc("any_peer", "call_remote", "reliable")

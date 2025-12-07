@@ -54,3 +54,6 @@ func _input(event: InputEvent) -> void:
 		head.rotation_degrees.x = clamp(head.rotation_degrees.x + -event.relative.y * movement_values.sensitivity,
 		 -movement_values.upper_clamp_angle_degrees,
 		 movement_values.lower_clamp_angle_degrees)
+
+func _on_sensitivity_slider_value_changed(value: float) -> void:
+	movement_values.sensitivity = value

@@ -49,10 +49,10 @@ shape = SubResource("SphereShape3D_sewk8")
 unique_name_in_owner = true
 mesh = SubResource("SphereMesh_sewk8")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
 mesh = SubResource("SphereMesh_0csno")
-skeleton = NodePath("../PowerUpSynchronizer")
+skeleton = NodePath("../../PowerUpSynchronizer")
 
 [node name="PowerUpSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2tof0")

@@ -14,9 +14,11 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	direction = Input.get_vector("left", "right", "forward", "backward")
-	space_pressed = Input.is_action_pressed("jump")
+	space_pressed = Input.is_action_just_pressed("jump")
 
 func _input(event: InputEvent) -> void:
+	if (Input.mouse_mode != Input.MOUSE_MODE_CAPTURED) and event is InputEventMouseButton and not Debug.debug_mode: 
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event.is_action_pressed("shoot"):
 		weapon.shoot()
 	if event.is_action_pressed("tag"):

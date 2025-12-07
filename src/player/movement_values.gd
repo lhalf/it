@@ -1,6 +1,7 @@
 class_name MovementValues extends Resource
 
-@export var max_speed: int = 20
+const DEFAULT_SPEED: int = 10
+@export var max_speed: int = 10
 @export var acceleration: int = 5
 @export var friction: int = 10
 @export var air_resistance: int = 5

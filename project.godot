@@ -13,12 +13,17 @@ config_version=5
 config/name="it"
 run/main_scene="uid://cy7mxkpy6mdxe"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/image="uid://5t4m60ipkjrs"
 config/icon="res://icon.svg"
 
 [autoload]
 
 Debug="*res://dev/Debug.tscn"
 GameManager="*res://src/game/game_manager.tscn"
+Signals="*res://src/global/signals.gd"
 
 [editor]
 
@@ -61,3 +66,7 @@ tag={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(399, 23),"global_position":Vector2(413, 96),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+
+[physics]
+
+3d/default_gravity=20.0
