@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://dm4bqkqvfal3i"]
+[gd_scene load_steps=48 format=4 uid="uid://dm4bqkqvfal3i"]
 
 [ext_resource type="Script" uid="uid://stho28wi4nul" path="res://src/player/input_synchronizer.gd" id="1_4anbu"]
 [ext_resource type="Script" uid="uid://cvyn03bjqliky" path="res://src/player/player.gd" id="1_rxibo"]
@@ -7,12 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://c7e3gxvw3ayfn" path="res://src/player/assets/glasses.glb" id="5_5f2sf"]
 [ext_resource type="PackedScene" uid="uid://c1fwlctc61psg" path="res://src/weapons/shotgun/shotgun.tscn" id="5_jiejy"]
 [ext_resource type="Script" uid="uid://dnpkk3ay6245" path="res://src/player/weapon.gd" id="5_o822w"]
-[ext_resource type="Script" uid="uid://b04fl0chfbogx" path="res://src/player/power_ups.gd" id="6_cwolq"]
+[ext_resource type="Script" uid="uid://b04fl0chfbogx" path="res://src/player/power_status.gd" id="6_cwolq"]
 [ext_resource type="Script" uid="uid://dj8ehw81w53pq" path="res://src/player/hand_right.gd" id="6_x42xx"]
 [ext_resource type="AudioStream" uid="uid://dva4qd5cfus6r" path="res://src/power_up/assets/speed.wav" id="7_2smqc"]
 [ext_resource type="Script" uid="uid://bmivl8q4x2y5n" path="res://src/player/hand_left.gd" id="8_l271a"]
+[ext_resource type="Script" uid="uid://b52tlgfegb2rx" path="res://src/player/tag_status.gd" id="8_rl62b"]
 [ext_resource type="Script" uid="uid://b1ji23jhuanf8" path="res://src/player/pick_up_area.gd" id="10_8ydov"]
 [ext_resource type="Script" uid="uid://12nlig5137ra" path="res://src/player/ui.gd" id="10_ylhto"]
+[ext_resource type="AudioStream" uid="uid://b0of8n4gdrcx" path="res://src/player/assets/hit.wav" id="12_wlj80"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4anbu"]
 properties/0/path = NodePath("InputSynchronizer:direction")
@@ -40,6 +42,11 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:velocity")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wlj80"]
+properties/0/path = NodePath(".:is_it")
+properties/0/spawn = true
+properties/0/replication_mode = 2
 
 [sub_resource type="Resource" id="Resource_cwolq"]
 resource_local_to_scene = true
@@ -148,7 +155,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_fi68i")
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_2smqc"]
+radius = 13.54
+
 [sub_resource type="LabelSettings" id="LabelSettings_ylhto"]
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_wlj80"]
 font_size = 50
 
 [sub_resource type="Animation" id="Animation_x42xx"]
@@ -272,7 +285,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(-0.4990808, 0.13108297, -0.5823355)]
+"values": [Vector3(-0.4990808, -0.8294025, -0.33909836)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -300,7 +313,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(-0.4990808, 0.13108297, -0.5823355), Vector3(-0.499, 0.34, -2.553), Vector3(-0.4990808, 0.13108297, -0.5823355)]
+"values": [Vector3(-0.4990808, -0.8294025, -0.33909836), Vector3(-0.086839214, -0.0542531, -2.2099485), Vector3(-0.4990808, -0.8294025, -0.33909836)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -312,7 +325,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(-0.3093247, 0, 0), Vector3(-1.1375532, 0, 0), Vector3(-0.3093247, 0, 0)]
+"values": [Vector3(-0.3093247, 0, 0), Vector3(-0.93183124, 0, 0), Vector3(-0.3093247, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8ydov"]
@@ -341,10 +354,12 @@ albedo_color = Color(1, 1, 1, 0.050980393)
 [sub_resource type="SphereMesh" id="SphereMesh_o822w"]
 material = SubResource("StandardMaterial3D_l271a")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_l271a"]
-radius = 1.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_wlj80"]
+size = Vector3(1.0917969, 1.0478516, 1.1439209)
 
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 513
+collision_mask = 513
 script = ExtResource("1_rxibo")
 
 [node name="InputSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -359,6 +374,9 @@ replication_config = SubResource("SceneReplicationConfig_244u8")
 [node name="PositionSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qnmj6")
 
+[node name="StatusSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wlj80")
+
 [node name="Movement" type="Node" parent="." node_paths=PackedStringArray("player")]
 unique_name_in_owner = true
 script = ExtResource("3_mf2ua")
@@ -369,17 +387,21 @@ movement_values = SubResource("Resource_cwolq")
 unique_name_in_owner = true
 script = ExtResource("5_o822w")
 
-[node name="PowerUps" type="Node" parent="."]
+[node name="PowerStatus" type="Node" parent="."]
 script = ExtResource("6_cwolq")
 
-[node name="SpeedTimer" type="Timer" parent="PowerUps"]
+[node name="SpeedTimer" type="Timer" parent="PowerStatus"]
 unique_name_in_owner = true
 wait_time = 3.0
 one_shot = true
 
-[node name="SpeedSound" type="AudioStreamPlayer3D" parent="PowerUps"]
+[node name="SpeedSound" type="AudioStreamPlayer3D" parent="PowerStatus"]
 unique_name_in_owner = true
 stream = ExtResource("7_2smqc")
+
+[node name="TagStatus" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_rl62b")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -431,21 +453,40 @@ hand_location = NodePath("../HandLocation")
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 
-[node name="HandLeft" type="Node3D" parent="."]
+[node name="HandLeft" type="Node3D" parent="Head"]
 unique_name_in_owner = true
-transform = Transform3D(0.015, 0, 0, 0, 0.014288089, 0.0045662317, 0, -0.0045662317, 0.014288089, -0.4990808, 0.13108297, -0.5823355)
+transform = Transform3D(0.015, 0, 0, 0, 0.014288089, 0.0045662317, 0, -0.0045662317, 0.014288089, -0.4990808, -0.8294025, -0.33909836)
 script = ExtResource("8_l271a")
 
-[node name="Mesh" type="MeshInstance3D" parent="HandLeft"]
+[node name="Mesh" type="MeshInstance3D" parent="Head/HandLeft"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -8.66, -21.92, -5.22)
 material_overlay = SubResource("StandardMaterial3D_jiejy")
 mesh = SubResource("ArrayMesh_jiejy")
 skeleton = NodePath("")
 
-[node name="Mesh2" type="MeshInstance3D" parent="HandLeft"]
+[node name="Mesh2" type="MeshInstance3D" parent="Head/HandLeft"]
 transform = Transform3D(-1, 0, -8.742278e-08, 1.7763568e-15, 1, 0, 8.742277e-08, 0, -1, -8.66, -21.92, -5.2199974)
 mesh = SubResource("ArrayMesh_o822w")
 skeleton = NodePath("")
+
+[node name="TagArea" type="Area3D" parent="Head/HandLeft"]
+unique_name_in_owner = true
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 4.1771317, 11.457928, -4.7628746)
+collision_layer = 512
+collision_mask = 512
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/HandLeft/TagArea"]
+shape = SubResource("SphereShape3D_2smqc")
+
+[node name="HitSound" type="AudioStreamPlayer" parent="Head/HandLeft"]
+unique_name_in_owner = true
+stream = ExtResource("12_wlj80")
+
+[node name="TagCooldown" type="Timer" parent="Head/HandLeft"]
+unique_name_in_owner = true
+wait_time = 0.4
 
 [node name="Glasses" parent="." instance=ExtResource("5_5f2sf")]
 unique_name_in_owner = true
@@ -460,6 +501,56 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_ylhto")
+
+[node name="Menu" type="Control" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="MenuMargin" type="MarginContainer" parent="UI/Menu"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 217.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Menu/MenuMargin"]
+layout_mode = 2
+
+[node name="NameEdit" type="TextEdit" parent="UI/Menu/MenuMargin/VBoxContainer"]
+unique_name_in_owner = true
+clip_contents = false
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+placeholder_text = "Enter name"
+
+[node name="Sensitivity" type="Label" parent="UI/Menu/MenuMargin/VBoxContainer"]
+layout_mode = 2
+text = "Sensitivity"
+horizontal_alignment = 1
+
+[node name="SensitivitySlider" type="HSlider" parent="UI/Menu/MenuMargin/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 0.1
+
+[node name="CloseButton" type="Button" parent="UI/Menu/MenuMargin/VBoxContainer"]
+layout_mode = 2
+text = "Close"
 
 [node name="Crosshair" type="ColorRect" parent="UI"]
 custom_minimum_size = Vector2(5, 5)
@@ -500,51 +591,33 @@ layout_mode = 2
 text = "2"
 label_settings = SubResource("LabelSettings_ylhto")
 
-[node name="Menu" type="Control" parent="UI"]
-unique_name_in_owner = true
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="MenuMargin" type="MarginContainer" parent="UI/Menu"]
+[node name="PopUps" type="Control" parent="UI"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = 912.0
-offset_right = 1112.0
-offset_bottom = 143.0
-grow_horizontal = 0
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Menu/MenuMargin"]
-layout_mode = 2
+[node name="ItLabel" type="Label" parent="UI/PopUps"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = 48.0
+offset_top = 26.0
+offset_right = 200.0
+offset_bottom = 96.0
+text = "you it"
+label_settings = SubResource("LabelSettings_wlj80")
 
-[node name="NameEdit" type="TextEdit" parent="UI/Menu/MenuMargin/VBoxContainer"]
-clip_contents = false
-custom_minimum_size = Vector2(0, 35)
-layout_mode = 2
-placeholder_text = "Enter name"
-
-[node name="Sensitivity" type="Label" parent="UI/Menu/MenuMargin/VBoxContainer"]
-layout_mode = 2
-text = "Sensitivity"
-horizontal_alignment = 1
-
-[node name="SensitivitySlider" type="HSlider" parent="UI/Menu/MenuMargin/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-min_value = 0.1
-max_value = 1.0
-step = 0.1
-value = 0.1
-
-[node name="CloseButton" type="Button" parent="UI/Menu/MenuMargin/VBoxContainer"]
-layout_mode = 2
-text = "Close"
+[node name="NameTag" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4105561, 0)
+billboard = 1
+double_sided = false
+text = "user"
+font_size = 100
 
 [node name="PlayerAnimations" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -567,16 +640,20 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_o822w")
 draw_pass_1 = SubResource("SphereMesh_o822w")
 
-[node name="PickUpArea" type="Area3D" parent="."]
+[node name="PlayerArea" type="Area3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 monitoring = false
 monitorable = false
 script = ExtResource("10_8ydov")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
-shape = SubResource("SphereShape3D_l271a")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024414063, 0.023925781, -0.006652832)
+shape = SubResource("BoxShape3D_wlj80")
 
-[connection signal="timeout" from="PowerUps/SpeedTimer" to="PowerUps" method="_on_speed_timer_timeout"]
+[connection signal="timeout" from="PowerStatus/SpeedTimer" to="PowerStatus" method="_on_speed_timer_timeout"]
+[connection signal="body_entered" from="Head/HandLeft/TagArea" to="TagStatus" method="_on_tag_area_body_entered"]
+[connection signal="timeout" from="Head/HandLeft/TagCooldown" to="TagStatus" method="_on_tag_cooldown_timeout"]
+[connection signal="text_changed" from="UI/Menu/MenuMargin/VBoxContainer/NameEdit" to="UI" method="_on_name_edit_text_changed"]
 [connection signal="value_changed" from="UI/Menu/MenuMargin/VBoxContainer/SensitivitySlider" to="Movement" method="_on_sensitivity_slider_value_changed"]
 [connection signal="pressed" from="UI/Menu/MenuMargin/VBoxContainer/CloseButton" to="UI" method="_close_menu"]

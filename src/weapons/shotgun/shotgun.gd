@@ -43,7 +43,9 @@ func release_shell() -> void:
 	add_child(shell)
 
 func reload() -> void:
-	print("reloading on " + str(multiplayer.get_unique_id()))
+	# we might have reloaded by power up before the timer
+	if rounds == max_rounds:
+		return
 	reload_sound.play()
 	current_barrel = Barrel.LEFT
 	rounds = max_rounds

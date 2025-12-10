@@ -2,6 +2,8 @@ class_name UI extends Control
 
 @onready var ammo: Label = %Ammo
 @onready var menu: Control = %Menu
+@onready var name_edit: TextEdit = %NameEdit
+@onready var name_tag: Label3D = %NameTag
 
 func set_ammo(amount: int) -> void:
 	ammo.text = str(amount)
@@ -20,3 +22,11 @@ func _input(event: InputEvent) -> void:
 func _close_menu():
 	menu.visible = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _on_name_edit_text_changed() -> void:
+	_change_name.rpc(name_edit.text)
+
+@rpc("any_peer", "call_remote", "reliable")
+func _change_name(new_name: String) -> void:
+	if new_name.length() < 20:
+		name_tag.text = new_name

@@ -9,7 +9,8 @@ bounce = 0.4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2tof0"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_sewk8"]
+[sub_resource type="SphereMesh" id="SphereMesh_d4eyp"]
+resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_2tof0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d4eyp"]
@@ -47,7 +48,7 @@ shape = SubResource("SphereShape3D_sewk8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-mesh = SubResource("SphereMesh_sewk8")
+mesh = SubResource("SphereMesh_d4eyp")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)

@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2yph4hmexiur"]
+[gd_scene load_steps=8 format=3 uid="uid://d2yph4hmexiur"]
 
 [ext_resource type="Texture2D" uid="uid://bucn45wivoc2g" path="res://src/map/assets/wood.png" id="1_csj2u"]
+[ext_resource type="Texture2D" uid="uid://b3im07qcqd4ol" path="res://src/map/assets/wood_normal.png" id="2_dc55v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dc55v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wr18a"]
 albedo_texture = ExtResource("1_csj2u")
+normal_enabled = true
+normal_scale = 0.5
+normal_texture = ExtResource("2_dc55v")
 uv1_scale = Vector3(3, 2, 2)
 
 [sub_resource type="BoxMesh" id="BoxMesh_yirlq"]

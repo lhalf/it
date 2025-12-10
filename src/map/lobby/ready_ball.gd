@@ -6,6 +6,7 @@ var is_ready: bool = false
 
 func _ready() -> void:
 	if Debug.debug_mode:
+		await get_tree().create_timer(0.5).timeout
 		on_hit.rpc_id(1, Vector3.ZERO)
 
 @rpc("any_peer", "call_remote", "reliable")

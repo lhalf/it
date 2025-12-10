@@ -4,26 +4,21 @@ class_name PowerUp extends ShootableBody
 
 @export var type: Type
 
-enum Type { SPEED }
+enum Type { SPEED, RELOAD }
 
 var colors : Dictionary = {
-	Type.SPEED: Color.GREEN
+	Type.SPEED: Color.GREEN,
+	Type.RELOAD: Color.SADDLE_BROWN
 }
 
 func _ready() -> void:
-	_setup_random()
-
-func _setup_random() -> void:
-	var random_type: Type = randi_range(0, Type.size() - 1) as Type
-	type = random_type
-	var color: Color = colors.get(random_type)
-	_set_color(color)
+	_set_color(colors.get(type))
 
 func _set_color(color: Color) -> void:
 	mesh_instance_3d.mesh.material.albedo_color = color
 
 func _on_pick_up_area_area_entered(area: Area3D) -> void:
-	if area is PickUpArea:
+	if area is PlayerArea:
 		Signals.rpc_id(1, "alert_power_up", type)
 		_delete.rpc_id(1)
 

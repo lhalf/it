@@ -1,1 +1,1 @@
-class_name PickUpArea extends Area3D
+class_name PlayerArea extends Area3D
