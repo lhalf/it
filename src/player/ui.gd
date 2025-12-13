@@ -1,12 +1,10 @@
 class_name UI extends Control
 
-@onready var ammo: Label = %Ammo
 @onready var menu: Control = %Menu
 @onready var name_edit: TextEdit = %NameEdit
 @onready var name_tag: Label3D = %NameTag
-
-func set_ammo(amount: int) -> void:
-	ammo.text = str(amount)
+@onready var shell_1: TextureRect = %Shell1
+@onready var shell_2: TextureRect = %Shell2
 
 func _toggle_menu() -> void:
 	if menu.visible:
@@ -30,3 +28,7 @@ func _on_name_edit_text_changed() -> void:
 func _change_name(new_name: String) -> void:
 	if new_name.length() < 20:
 		name_tag.text = new_name
+
+func reset_ammo() -> void:
+	shell_1.visible = true
+	shell_2.visible = true

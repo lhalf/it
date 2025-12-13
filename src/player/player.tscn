@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://b1ji23jhuanf8" path="res://src/player/pick_up_area.gd" id="10_8ydov"]
 [ext_resource type="Script" uid="uid://12nlig5137ra" path="res://src/player/ui.gd" id="10_ylhto"]
 [ext_resource type="AudioStream" uid="uid://b0of8n4gdrcx" path="res://src/player/assets/hit.wav" id="12_wlj80"]
+[ext_resource type="Texture2D" uid="uid://7k8uvgopnvle" path="res://src/weapons/shotgun/assets/shell.png" id="15_6bm8s"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4anbu"]
 properties/0/path = NodePath("InputSynchronizer:direction")
@@ -47,6 +48,12 @@ properties/1/replication_mode = 1
 properties/0/path = NodePath(".:is_it")
 properties/0/spawn = true
 properties/0/replication_mode = 2
+properties/1/path = NodePath("NameTag:text")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:visible")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [sub_resource type="Resource" id="Resource_cwolq"]
 resource_local_to_scene = true
@@ -157,9 +164,6 @@ shadow_mesh = SubResource("ArrayMesh_fi68i")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2smqc"]
 radius = 13.54
-
-[sub_resource type="LabelSettings" id="LabelSettings_ylhto"]
-font_size = 50
 
 [sub_resource type="LabelSettings" id="LabelSettings_wlj80"]
 font_size = 50
@@ -399,6 +403,11 @@ one_shot = true
 unique_name_in_owner = true
 stream = ExtResource("7_2smqc")
 
+[node name="InvisbleTimer" type="Timer" parent="PowerStatus"]
+unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true
+
 [node name="TagStatus" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("8_rl62b")
@@ -569,28 +578,6 @@ grow_vertical = 2
 rotation = 0.7853982
 pivot_offset = Vector2(2.5, 2.5)
 
-[node name="AmmoMargin" type="MarginContainer" parent="UI"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -69.0
-offset_top = -109.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="Ammo" type="Label" parent="UI/AmmoMargin"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "2"
-label_settings = SubResource("LabelSettings_ylhto")
-
 [node name="PopUps" type="Control" parent="UI"]
 layout_mode = 1
 anchors_preset = 15
@@ -610,6 +597,38 @@ offset_right = 200.0
 offset_bottom = 96.0
 text = "you it"
 label_settings = SubResource("LabelSettings_wlj80")
+
+[node name="Ammo" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Shell1" type="TextureRect" parent="UI/Ammo"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -171.0
+offset_top = -130.0
+offset_right = 167.0
+offset_bottom = 208.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_6bm8s")
+
+[node name="Shell2" type="TextureRect" parent="UI/Ammo"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -132.0
+offset_top = -114.0
+offset_right = 206.0
+offset_bottom = 224.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_6bm8s")
 
 [node name="NameTag" type="Label3D" parent="."]
 unique_name_in_owner = true
@@ -652,6 +671,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.024414063, 0.023925781, -0.
 shape = SubResource("BoxShape3D_wlj80")
 
 [connection signal="timeout" from="PowerStatus/SpeedTimer" to="PowerStatus" method="_on_speed_timer_timeout"]
+[connection signal="timeout" from="PowerStatus/InvisbleTimer" to="PowerStatus" method="_on_invisble_timer_timeout"]
 [connection signal="body_entered" from="Head/HandLeft/TagArea" to="TagStatus" method="_on_tag_area_body_entered"]
 [connection signal="timeout" from="Head/HandLeft/TagCooldown" to="TagStatus" method="_on_tag_cooldown_timeout"]
 [connection signal="text_changed" from="UI/Menu/MenuMargin/VBoxContainer/NameEdit" to="UI" method="_on_name_edit_text_changed"]

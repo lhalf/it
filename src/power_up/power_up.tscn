@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cikfqp778d5fc"]
+[gd_scene load_steps=9 format=3 uid="uid://cikfqp778d5fc"]
 
 [ext_resource type="Script" uid="uid://ch7dksb3c1v7b" path="res://src/power_up/power_up.gd" id="1_2tof0"]
 
@@ -7,11 +7,7 @@ bounce = 0.4
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sewk8"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2tof0"]
-
 [sub_resource type="SphereMesh" id="SphereMesh_d4eyp"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_2tof0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d4eyp"]
 shading_mode = 0
@@ -59,6 +55,7 @@ skeleton = NodePath("../../PowerUpSynchronizer")
 replication_config = SubResource("SceneReplicationConfig_2tof0")
 
 [node name="PickUpArea" type="Area3D" parent="."]
+unique_name_in_owner = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpArea"]
 shape = SubResource("SphereShape3D_2tof0")

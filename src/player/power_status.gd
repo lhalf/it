@@ -5,6 +5,7 @@ class_name PowerStatus extends Node
 
 @onready var speed_timer: Timer = %SpeedTimer
 @onready var speed_sound: AudioStreamPlayer3D = %SpeedSound
+@onready var invisble_timer: Timer = %InvisbleTimer
 
 func _ready() -> void:
 	Signals.pad_activated.connect(_on_pad)
@@ -30,7 +31,9 @@ func _on_power_up(id: int, type: PowerUp.Type) -> void:
 		PowerUp.Type.SPEED:
 			_apply_speed(id)
 		PowerUp.Type.RELOAD:
-			shotgun.reload()
+			shotgun.reload.rpc_id(id)
+		PowerUp.Type.INVISIBLE:
+			_apply_invisible()
 
 # effects
 
@@ -48,3 +51,10 @@ func _speed_effects() -> void:
 
 func _on_speed_timer_timeout() -> void:
 	movement.movement_values.max_speed = movement.movement_values.DEFAULT_SPEED
+
+func _apply_invisible() -> void:
+	invisble_timer.start()
+	get_parent().visible = false
+
+func _on_invisble_timer_timeout() -> void:
+	get_parent().visible = true

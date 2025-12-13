@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ck520dekwe0ek"]
+[gd_scene load_steps=19 format=3 uid="uid://ck520dekwe0ek"]
 
 [ext_resource type="Texture2D" uid="uid://c7c1blrp1nki1" path="res://src/map/assets/texture_floor.png" id="1_2slsx"]
 [ext_resource type="Script" uid="uid://pwmh3f73sq5m" path="res://src/map/docks/map.gd" id="1_ofv2w"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cktpa6t4v04dc" path="res://src/map/assets/texture_floor_normal.png" id="3_owi61"]
 [ext_resource type="Shader" uid="uid://c84sjrkfcjuwv" path="res://src/shaders/water.gdshader" id="5_2ju4x"]
 [ext_resource type="PackedScene" uid="uid://btun152w1g7un" path="res://src/pad/pad.tscn" id="5_mgq13"]
+[ext_resource type="PackedScene" uid="uid://bbh6mpldawmeg" path="res://src/map/common/pallet.tscn" id="7_7312o"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_0opkc"]
 
@@ -18,32 +19,10 @@ uv1_scale = Vector3(10, 10, 10)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_0opkc"]
 material = SubResource("StandardMaterial3D_wt6h8")
-size = Vector2(50, 50)
+size = Vector2(80, 80)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ofv2w"]
-data = PackedVector3Array(-25, -25, 25, -25, 25, -25, -25, -25, -25, 25, -25, -25, -25, -25, 25, -25, -25, -25, -25, 25, -25, 25, -25, -25, -25, -25, -25, -25, 25, -25, -25, -25, 25, -25, 25, 25, -25, -25, 25, 25, 25, 25, -25, 25, 25, 25, 25, 25, -25, 25, -25, -25, 25, 25, -25, -25, 25, 25, -25, -25, 25, -25, 25, 25, 25, 25, -25, -25, 25, 25, -25, 25, 25, -25, -25, 25, 25, 25, 25, -25, 25, 25, -25, -25, -25, 25, -25, 25, 25, -25, -25, 25, -25, 25, 25, 25, 25, 25, -25, 25, 25, 25, 25, -25, -25, 25, 25, -25)
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2slsx"]
-sky_top_color = Color(0.6013269, 0.40385148, 0, 1)
-sky_horizon_color = Color(0.78431374, 0.7921569, 0.77254903, 1)
-ground_bottom_color = Color(0.26872456, 0.36024812, 1, 1)
-ground_horizon_color = Color(0.08235294, 0.36078432, 1, 1)
-
-[sub_resource type="Sky" id="Sky_wt6h8"]
-sky_material = SubResource("ProceduralSkyMaterial_2slsx")
-
-[sub_resource type="Environment" id="Environment_ofv2w"]
-background_mode = 2
-sky = SubResource("Sky_wt6h8")
-glow_intensity = 8.0
-fog_enabled = true
-fog_mode = 1
-fog_light_energy = 0.1
-fog_sun_scatter = 0.1
-fog_density = 1.0
-fog_aerial_perspective = 1.0
-fog_depth_begin = 50.0
-fog_depth_end = 300.0
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mgq13"]
+data = PackedVector3Array(-40, -50, 40, -40, 50, -40, -40, -50, -40, 40, -50, -40, -40, -50, 40, -40, -50, -40, -40, 50, -40, 40, -50, -40, -40, -50, -40, -40, 50, -40, -40, -50, 40, -40, 50, 40, -40, -50, 40, 40, 50, 40, -40, 50, 40, 40, 50, 40, -40, 50, -40, -40, 50, 40, -40, -50, 40, 40, -50, -40, 40, -50, 40, 40, 50, 40, -40, -50, 40, 40, -50, 40, 40, -50, -40, 40, 50, 40, 40, -50, 40, 40, -50, -40, -40, 50, -40, 40, 50, -40, -40, 50, -40, 40, 50, 40, 40, 50, -40, 40, 50, 40, 40, -50, -40, 40, 50, -40)
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2ju4x"]
 
@@ -74,12 +53,35 @@ shader_parameter/color4 = Color(0, 0.267, 1, 1)
 material = SubResource("ShaderMaterial_2ju4x")
 size = Vector2(1000, 1000)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2slsx"]
+sky_top_color = Color(0.6013269, 0.40385148, 0, 1)
+sky_horizon_color = Color(0.78431374, 0.7921569, 0.77254903, 1)
+ground_bottom_color = Color(0.26872456, 0.36024812, 1, 1)
+ground_horizon_color = Color(0.08235294, 0.36078432, 1, 1)
+
+[sub_resource type="Sky" id="Sky_wt6h8"]
+sky_material = SubResource("ProceduralSkyMaterial_2slsx")
+
+[sub_resource type="Environment" id="Environment_ofv2w"]
+background_mode = 2
+sky = SubResource("Sky_wt6h8")
+glow_intensity = 8.0
+fog_enabled = true
+fog_mode = 1
+fog_light_energy = 0.1
+fog_sun_scatter = 0.1
+fog_density = 1.0
+fog_aerial_perspective = 1.0
+fog_depth_begin = 50.0
+fog_depth_end = 300.0
+
 [node name="Map" type="Node3D"]
 script = ExtResource("1_ofv2w")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 collision_layer = 3
 collision_mask = 3
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("WorldBoundaryShape3D_0opkc")
@@ -90,10 +92,16 @@ mesh = SubResource("PlaneMesh_0opkc")
 [node name="Skybox" type="StaticBody3D" parent="."]
 collision_layer = 3
 collision_mask = 3
+metadata/_edit_lock_ = true
 
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Skybox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 0)
-shape = SubResource("ConcavePolygonShape3D_ofv2w")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+shape = SubResource("ConcavePolygonShape3D_mgq13")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 6.548126, -21.67382, 88.1881)
+mesh = SubResource("QuadMesh_owi61")
+metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ofv2w")
@@ -102,42 +110,93 @@ environment = SubResource("Environment_ofv2w")
 transform = Transform3D(0.8625225, 0.2245903, -0.453447, -0.20016977, 0.9744491, 0.10188813, 0.46474412, 0.002885585, 0.8854403, 0, 3.0673852, 7.0095277)
 shadow_enabled = true
 
-[node name="Boxes" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 10)
-
-[node name="WoodBox" parent="Boxes" instance=ExtResource("2_wt6h8")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
-
-[node name="WoodBox2" parent="Boxes" instance=ExtResource("2_wt6h8")]
-transform = Transform3D(2.4748738, 0, 2.4748738, 0, 3.5, 0, -2.4748738, 0, 2.4748738, 0, 5, 0)
-
-[node name="WoodBox3" parent="Boxes" instance=ExtResource("2_wt6h8")]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 8.5, 0)
-
-[node name="WoodBox4" parent="Boxes" instance=ExtResource("2_wt6h8")]
-transform = Transform3D(1.2374369, 0, 1.2374369, 0, 1.75, 0, -1.2374369, 0, 1.2374369, 0, 11, 0)
-
-[node name="Boxes2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -10)
-
-[node name="WoodBox" parent="Boxes2" instance=ExtResource("2_wt6h8")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
-
-[node name="WoodBox2" parent="Boxes2" instance=ExtResource("2_wt6h8")]
-transform = Transform3D(2.4748738, 0, 2.4748738, 0, 3.5, 0, -2.4748738, 0, 2.4748738, 0, 5, 0)
-
-[node name="WoodBox3" parent="Boxes2" instance=ExtResource("2_wt6h8")]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 8.5, 0)
-
-[node name="WoodBox4" parent="Boxes2" instance=ExtResource("2_wt6h8")]
-transform = Transform3D(1.2374369, 0, 1.2374369, 0, 1.75, 0, -1.2374369, 0, 1.2374369, 0, 11, 0)
-
 [node name="Pads" type="Node3D" parent="."]
 
 [node name="Pad" parent="Pads" instance=ExtResource("5_mgq13")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.376862, 0, 12.165901)
 type = 1
 
-[node name="Water" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 6.548126, -21.67382, 88.1881)
-mesh = SubResource("QuadMesh_owi61")
+[node name="Pad2" parent="Pads" instance=ExtResource("5_mgq13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.247696, 20, 22.871458)
+type = 1
+
+[node name="Pad3" parent="Pads" instance=ExtResource("5_mgq13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.613277, 0, 33.95685)
+type = 1
+
+[node name="BoxPile" type="Node3D" parent="."]
+transform = Transform3D(2.828427, 0, 2.828427, 0, 4, 0, -2.828427, 0, 2.828427, -22.076275, 0, 23.368406)
+
+[node name="WoodBox" parent="BoxPile" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="WoodBox2" parent="BoxPile" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(2.4748738, 0, 2.4748738, 0, 3.5, 0, -2.4748738, 0, 2.4748738, 0, 5, 0)
+
+[node name="WoodBox3" parent="BoxPile" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 8.5, 0)
+
+[node name="WoodBox4" parent="BoxPile" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(1.2374369, 0, 1.2374369, 0, 1.75, 0, -1.2374369, 0, 1.2374369, 0, 11, 0)
+
+[node name="BoxFloor" type="Node3D" parent="."]
+
+[node name="WoodBox" parent="BoxFloor" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(5.6811266, 0, -3.28, 0, 6.56, 0, 3.28, 0, 5.6811266, -20.971611, 0, 1.1162071)
+
+[node name="WoodBox2" parent="BoxFloor" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(1.8014494, 0, -4.6642017, 0, 4.9999995, 0, 4.6642017, 0, 1.8014494, -6, 0, -21.14777)
+
+[node name="WoodBox3" parent="BoxFloor" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(4.6229024, 0, -6.7787013, 0, 8.205, 0, 6.7787013, 0, 4.6229024, 21.523378, 0, 8.893586)
+
+[node name="WoodBox4" parent="BoxFloor" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(8.009774, 0, -0.060114145, 0, 8.01, 0, 0.060114145, 0, 8.009774, -17.103365, 0, -13.056746)
+
+[node name="WoodBox5" parent="BoxFloor" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(4.783332, 0, -1.4559326, 0, 4.9999995, 0, 1.4559326, 0, 4.783332, 2.821722, 0, -23.01635)
+
+[node name="WoodBox6" parent="BoxFloor" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(4.995118, 0, 0.2208867, 0, 4.9999995, 0, -0.2208867, 0, 4.995118, 17.145191, 0, -19.295074)
+
+[node name="WoodBox7" parent="BoxFloor" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(2.9872856, 0, -4.009504, 0, 4.9999995, 0, 4.009504, 0, 2.9872856, 22.919134, 0, -2.2611008)
+
+[node name="WoodBox8" parent="BoxFloor" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(4.8121815, 0, 1.357538, 0, 4.9999995, 0, -1.357538, 0, 4.8121815, 20.79336, 0, -11.563366)
+
+[node name="BoxArch" type="Node3D" parent="."]
+transform = Transform3D(3.935, 0, 0, 0, 3.935, 0, 0, 0, 3.935, 17.100864, 0, 28.667553)
+
+[node name="WoodBox" parent="BoxArch" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.5131588, 0.0025262833, 2.6494265e-05)
+
+[node name="WoodBox2" parent="BoxArch" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.5353376, 0.0025262833, 2.6494265e-05)
+
+[node name="Pallet" parent="BoxArch" instance=ExtResource("7_7312o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.508, 0)
+
+[node name="WoodBox3" parent="BoxArch" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.04755491, 1.7090075, 2.6494265e-05)
+
+[node name="WoodBox4" parent="BoxArch" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(0.5213287, 0, -0.62645143, 0, 0.815, 0, 0.62645143, 0, 0.5213287, -0.09396547, 3.2090077, 2.6494265e-05)
+
+[node name="BoxArch2" type="Node3D" parent="."]
+transform = Transform3D(3.0875416, 0, 2.439531, 0, 3.935, 0, -2.439531, 0, 3.0875416, -24.410046, 0, -25.660439)
+
+[node name="WoodBox" parent="BoxArch2" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.5131588, 0.0025262833, 2.6494265e-05)
+
+[node name="WoodBox2" parent="BoxArch2" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.5353376, 0.0025262833, 2.6494265e-05)
+
+[node name="Pallet" parent="BoxArch2" instance=ExtResource("7_7312o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.508, 0)
+
+[node name="WoodBox3" parent="BoxArch2" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.04755491, 1.7090075, 2.6494265e-05)
+
+[node name="WoodBox4" parent="BoxArch2" instance=ExtResource("2_wt6h8")]
+transform = Transform3D(0.5213287, 0, -0.62645143, 0, 0.815, 0, 0.62645143, 0, 0.5213287, -0.09396547, 3.2090077, 2.6494265e-05)

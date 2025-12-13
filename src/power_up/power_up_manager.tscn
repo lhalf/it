@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://hovly4golyfs" path="res://src/power_up/power_up_manager.gd" id="1_qgg4c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nc7hu"]
-size = Vector3(50, 1, 50)
+size = Vector3(80, 1, 80)
 
 [node name="PowerUpManager" type="Node3D"]
 script = ExtResource("1_qgg4c")
@@ -23,7 +23,6 @@ shape = SubResource("BoxShape3D_nc7hu")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 2.0
 
 [node name="PowerUps" type="Marker3D" parent="."]
 unique_name_in_owner = true

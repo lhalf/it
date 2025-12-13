@@ -16,8 +16,7 @@ func _on_spawn_timer_timeout() -> void:
 func _spawn_power_up() -> void:
 	var power_up: PowerUp = POWER_UP.instantiate()
 	power_up.position = _get_random_point_in_area(power_up_area)
-	# power_up.type = randi_range(0, PowerUp.Type.size() - 1) as PowerUp.Type
-	power_up.type = PowerUp.Type.SPEED
+	power_up.type = randi_range(0, PowerUp.Type.size() - 1) as PowerUp.Type
 	power_ups.add_child(power_up, true)
 
 func _get_random_point_in_area(area: Area3D) -> Vector3:

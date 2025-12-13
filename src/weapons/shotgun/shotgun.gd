@@ -2,6 +2,8 @@ class_name Shotgun extends Node3D
 
 const shell_scene = preload("res://src/weapons/shotgun/shell.tscn")
 
+signal left_fired
+signal right_fired
 signal reloaded
 
 @onready var animations: AnimationPlayer = %AnimationPlayer
@@ -25,9 +27,13 @@ func shoot() -> void:
 	if current_barrel == Barrel.LEFT:
 		fire("shoot_left")
 		current_barrel = Barrel.RIGHT
+		if multiplayer.get_unique_id() == multiplayer.get_remote_sender_id():
+			left_fired.emit()
 	elif current_barrel == Barrel.RIGHT:
 		fire("shoot_right")
+		# if we're the client control our reload timer
 		if multiplayer.get_unique_id() == multiplayer.get_remote_sender_id():
+			right_fired.emit()
 			%ReloadTimer.start()
 
 func fire(animation_name: String) -> void:
@@ -42,6 +48,7 @@ func release_shell() -> void:
 	shell.angular_velocity = Vector3(0,0,10)
 	add_child(shell)
 
+@rpc("authority", "call_remote", "reliable")
 func reload() -> void:
 	# we might have reloaded by power up before the timer
 	if rounds == max_rounds:

@@ -14,19 +14,31 @@ func setup() -> void:
 
 # TODO: should client add dummy players for others connected?
 func add_player(id: int) -> void:
-	var player: CharacterBody3D = player_scene.instantiate()
+	var player: Player = player_scene.instantiate()
 	player.name = str(id)
-	player.position.x = randi_range(-5, 5)
-	player.position.z = randi_range(-5, 5)
+	_set_spawn_position(player)
 	players.add_child(player, true)
+
+func _set_spawn_position(player: Player) -> void:
+	player.position.x = randi_range(-5, 5)
+	player.position.y = 0
+	player.position.z = randi_range(-5, 5)
+
+func _set_spawn_position_for_all_players() -> void:
+	for player in players.get_children():
+		_set_spawn_position(player)
 
 func remove_player(id: int) -> void:
 	var player = players.get_node(str(id))
+	
 	if player:
 		players.remove_child(player)
 		player.queue_free()
-	if players.get_children().is_empty():
+	
+	if players.get_children().size() <= 1:
 		Debug.log("stopping game...")
+		_set_spawn_position_for_all_players()
+		_reset_players_to_not_it()
 		map_manager.change_map(load("res://src/map/lobby/map.tscn"))
 	elif is_nobody_it():
 		GameManager.pick_someone_to_be_it()
@@ -62,8 +74,11 @@ func is_nobody_it() -> bool:
 func is_everyone_it() -> bool:
 	return players.get_children().all(func(p: Player): return p.is_it)
 
+func _reset_players_to_not_it() -> void:
+	for player: Player in players.get_children():
+			player.is_it = false
+
 func reset_game() -> void:
 	if is_everyone_it():
-		for player: Player in players.get_children():
-			player.is_it = false
+		_reset_players_to_not_it()
 		GameManager.pick_someone_to_be_it()
